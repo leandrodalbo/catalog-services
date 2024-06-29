@@ -1,0 +1,15 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: catalog-configurations
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/leandrodalbo/catalog-configuration.git
+          default-label: main
+          clone-on-start: true
+          force-pull: true
+          timeout: 5
