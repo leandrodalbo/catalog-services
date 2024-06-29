@@ -1,0 +1,2 @@
+ALTER TABLE purchase
+DROP CONSTRAINT purchase_book_isbn_key;

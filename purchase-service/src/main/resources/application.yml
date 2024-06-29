@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: orders-service
+  r2dbc:
+    username: user
+    password: password
+    url: r2dbc:postgresql://localhost:5432/orders
+    pool:
+      max-create-connection-time: 2s
+      initial-size: 5
+      max-size: 10
+  flyway:
+    user: ${spring.r2dbc.username}
+    password: ${spring.r2dbc.password}
+    url: jdbc:postgresql://localhost:5432/orders
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+  cloud:
+    function:
+      definition: setDispatched
+    stream:
+      bindings:
+        setDispatched-in-0:
+          destination: purchase-dispatched
+          group: { spring.application.name }
+        acceptOrder-out-0:
+          destination: purchase-accepted
+          producer:
+            transacted: true
+server:
+  port: 8183
+  netty:
+    connection-timeout: 2s
+    idle-timeout: 15s
+catalog:
+  endpoint-uri: http://127.0.0.1:8080
