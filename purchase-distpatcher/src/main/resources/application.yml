@@ -1,0 +1,22 @@
+server:
+  port: 9005
+spring:
+  application:
+    name: purchase-distpatcher
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+  cloud:
+    function:
+      definition: packagePurchase|labelPurchase
+    stream:
+      bindings:
+        packagePurchaselabelPurchase-in-0:
+          destination: purchase-accepted
+          group: ${spring.application.name}
+        packagePurchaselabelPurchase-out-0:
+          destination: purchase-dispatched
+
